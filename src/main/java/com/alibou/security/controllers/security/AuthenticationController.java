@@ -2,7 +2,7 @@ package com.alibou.security.controllers.security;
 
 import com.alibou.security.pojo.AuthenticationRequest;
 import com.alibou.security.responses.AuthenticationResponse;
-import com.alibou.security.services.AuthenticationService;
+import com.alibou.security.services.security.AuthenticationService;
 import com.alibou.security.pojo.RegisterRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,10 +36,7 @@ public class AuthenticationController {
   }
 
   @PostMapping("/refresh-token")
-  public void refreshToken(
-      HttpServletRequest request,
-      HttpServletResponse response
-  ) throws IOException {
+  public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
     service.refreshToken(request, response);
   }
 

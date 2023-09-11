@@ -1,5 +1,6 @@
 package com.alibou.security.entities;
 
+import com.alibou.security.entities.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

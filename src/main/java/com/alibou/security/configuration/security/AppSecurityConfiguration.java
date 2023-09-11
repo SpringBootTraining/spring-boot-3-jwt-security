@@ -14,8 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static com.alibou.security.entities.Permission.*;
-import static com.alibou.security.entities.Role.*;
+import static com.alibou.security.entities.enums.Permission.*;
+import static com.alibou.security.entities.enums.Role.*;
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration

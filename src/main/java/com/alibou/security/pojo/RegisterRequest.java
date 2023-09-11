@@ -1,6 +1,6 @@
 package com.alibou.security.pojo;
 
-import com.alibou.security.entities.Role;
+import com.alibou.security.entities.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

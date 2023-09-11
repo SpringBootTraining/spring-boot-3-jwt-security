@@ -1,4 +1,4 @@
-package com.alibou.security.configuration;
+package com.alibou.security.configuration.swager;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
