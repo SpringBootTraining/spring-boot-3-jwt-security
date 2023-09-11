@@ -1,7 +1,9 @@
-package com.alibou.security.token;
+package com.alibou.security.repositories;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.alibou.security.entities.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,4 +1,4 @@
-package com.alibou.security.auth;
+package com.alibou.security.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

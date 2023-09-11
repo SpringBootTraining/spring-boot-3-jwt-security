@@ -1,5 +1,9 @@
-package com.alibou.security.auth;
+package com.alibou.security.controllers.security;
 
+import com.alibou.security.pojo.AuthenticationRequest;
+import com.alibou.security.responses.AuthenticationResponse;
+import com.alibou.security.services.AuthenticationService;
+import com.alibou.security.pojo.RegisterRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
