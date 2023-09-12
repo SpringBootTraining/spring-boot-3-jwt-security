@@ -39,6 +39,18 @@ public enum Role {
   @Getter
   private final Set<Permission> permissions;
 
+  /**
+   * Retrieves a list of authorities for the current user.
+   * It's a must to make this method return type one of the implementation classes that implements the GrantedAuthority interface
+   *
+   * This method retrieves a list of authorities for the current user. These authorities are derived from the user's permissions
+   * and the role associated with the user's name. The permissions are obtained by calling the getPermissions method, which
+   * returns a list of Permission objects. Each Permission object is mapped to a SimpleGrantedAuthority object by extracting
+   * the permission string via the getPermission method. These SimpleGrantedAuthority objects are then collected into a list.
+   * Additionally, a SimpleGrantedAuthority object representing the user's role (prefixed with "ROLE_") is also added to the list.
+   *
+   * @return a list of SimpleGrantedAuthority objects representing the authorities of the current user
+   */
   public List<SimpleGrantedAuthority> getAuthorities() {
     var authorities = getPermissions()
             .stream()

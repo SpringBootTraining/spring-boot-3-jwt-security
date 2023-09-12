@@ -3,7 +3,6 @@ package com.alibou.security.services.security;
 import com.alibou.security.pojo.AuthenticationRequest;
 import com.alibou.security.responses.AuthenticationResponse;
 import com.alibou.security.pojo.RegisterRequest;
-import com.alibou.security.configuration.security.JwtService;
 import com.alibou.security.entities.Token;
 import com.alibou.security.repositories.TokenRepository;
 import com.alibou.security.entities.enums.TokenType;

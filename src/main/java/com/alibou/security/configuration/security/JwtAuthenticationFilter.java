@@ -1,9 +1,8 @@
 package com.alibou.security.configuration.security;
 
 import com.alibou.security.repositories.TokenRepository;
-import com.alibou.security.services.CustomUserDetailsService;
 import com.alibou.security.services.CustomUserDetailsServiceImpl;
-import io.jsonwebtoken.lang.Assert;
+import com.alibou.security.services.security.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +16,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -37,6 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+        // Check if the authorization bearer token is existing and return Forbidden 403 response if it is missing
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -49,15 +48,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // Extract the [ Email or Username ] from the bearer token claims.
         final String userEmail = jwtService.extractUsername(jwt);
 
-        // Retrieve the user from the DB if it's exist if the extracted Email is not null and there's no authenticated user in the SecurityContextHolder.
+        // After extracting the Username or Email from the bearer token claims, we'll check if's not null and the SecurityContextHolder doesn't have an authenticated user.
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+            // After extracting the user form the bearer token we'll retrieve the user from the DB if it's exist.
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
 
-            // Check if the token is valid.
+            // Retrieve the token from the DB by the token itself as it is unique.
+            // Check if the token is not expired and not revoked
             var isTokenValid = tokenRepository.findByToken(jwt)
                     .map(t -> !t.isExpired() && !t.isRevoked())
                     .orElse(false);
 
+            // Check the retrieved token from DB & the provided bearer token are valid.
             if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
