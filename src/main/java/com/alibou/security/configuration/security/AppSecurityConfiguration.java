@@ -52,7 +52,6 @@ public class AppSecurityConfiguration {
 
                             // Secure some endpoints for specific users and roles
                             .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
-
                             .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
                             .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
                             .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
@@ -67,8 +66,8 @@ public class AppSecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
-                .logoutUrl("/api/v1/auth/logout")
-                .addLogoutHandler(logoutHandler)
+                .logoutUrl("/api/v1/auth/logout") // This doesn't need a RequestMapping method in a controller
+                .addLogoutHandler(logoutHandler) // Spring will execute this LogoutHandler everytime get a request to above logout URL.
                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
 
         return http.build();

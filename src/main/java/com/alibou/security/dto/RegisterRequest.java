@@ -1,4 +1,4 @@
-package com.alibou.security.pojo;
+package com.alibou.security.dto;
 
 import com.alibou.security.entities.enums.Role;
 import lombok.AllArgsConstructor;

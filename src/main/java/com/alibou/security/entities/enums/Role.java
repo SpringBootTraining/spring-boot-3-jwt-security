@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import static com.alibou.security.entities.enums.Permission.*;
 
+@Getter
 @RequiredArgsConstructor
 public enum Role {
 
@@ -32,17 +33,14 @@ public enum Role {
                   MANAGER_DELETE,
                   MANAGER_CREATE
           )
-  )
+  );
 
-  ;
-
-  @Getter
   private final Set<Permission> permissions;
 
   /**
    * Retrieves a list of authorities for the current user.
    * It's a must to make this method return type one of the implementation classes that implements the GrantedAuthority interface
-   *
+   * <p>
    * This method retrieves a list of authorities for the current user. These authorities are derived from the user's permissions
    * and the role associated with the user's name. The permissions are obtained by calling the getPermissions method, which
    * returns a list of Permission objects. Each Permission object is mapped to a SimpleGrantedAuthority object by extracting
@@ -52,7 +50,7 @@ public enum Role {
    * @return a list of SimpleGrantedAuthority objects representing the authorities of the current user
    */
   public List<SimpleGrantedAuthority> getAuthorities() {
-    var authorities = getPermissions()
+    List<SimpleGrantedAuthority> authorities = getPermissions()
             .stream()
             .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
             .collect(Collectors.toList());

@@ -1,7 +1,7 @@
 package com.alibou.security;
 
+import com.alibou.security.dto.RegisterRequest;
 import com.alibou.security.services.security.AuthenticationService;
-import com.alibou.security.pojo.RegisterRequest;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,9 +18,7 @@ public class SecurityApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(
-			AuthenticationService service
-	) {
+	public CommandLineRunner commandLineRunner(AuthenticationService service) {
 		return args -> {
 			var admin = RegisterRequest.builder()
 					.firstname("Admin")

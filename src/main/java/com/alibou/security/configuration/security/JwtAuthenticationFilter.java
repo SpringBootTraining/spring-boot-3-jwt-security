@@ -48,27 +48,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // Extract the [ Email or Username ] from the bearer token claims.
         final String userEmail = jwtService.extractUsername(jwt);
 
-        // After extracting the Username or Email from the bearer token claims, we'll check if's not null and the SecurityContextHolder doesn't have an authenticated user.
+        // After extracting the Username or Email from the bearer token claims, we'll check if it's not null and the SecurityContextHolder doesn't have an authenticated user.
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             // After extracting the user form the bearer token we'll retrieve the user from the DB if it's exist.
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+            UserDetails loadedUser = userDetailsService.loadUserByUsername(userEmail);
 
-            // Retrieve the token from the DB by the token itself as it is unique.
-            // Check if the token is not expired and not revoked
+            // This is to get only the valid token from the DB.
+            // We'll use this to ensure that the user has only one valid token which will be the same token that passed with the request.
             var isTokenValid = tokenRepository.findByToken(jwt)
                     .map(t -> !t.isExpired() && !t.isRevoked())
                     .orElse(false);
 
-            // Check the retrieved token from DB & the provided bearer token are valid.
-            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
+            // Here we are checking if the user really has only one valid token.
+            if (jwtService.isTokenValid(jwt, loadedUser) && isTokenValid) {
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                        loadedUser,
                         null,
-                        userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)
+                        loadedUser.getAuthorities());
+                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)
                 );
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
         filterChain.doFilter(request, response);
