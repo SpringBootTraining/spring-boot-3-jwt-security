@@ -1,4 +1,4 @@
-package com.alibou.security.entities.enums;
+package com.alibou.security.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

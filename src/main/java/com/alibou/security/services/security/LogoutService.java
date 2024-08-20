@@ -1,6 +1,6 @@
 package com.alibou.security.services.security;
 
-import com.alibou.security.entities.Token;
+import com.alibou.security.model.entities.Token;
 import com.alibou.security.repositories.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,8 +1,8 @@
 package com.alibou.security.services.security;
 
-import com.alibou.security.entities.Token;
-import com.alibou.security.entities.User;
-import com.alibou.security.entities.enums.TokenType;
+import com.alibou.security.model.entities.Token;
+import com.alibou.security.model.entities.User;
+import com.alibou.security.model.enums.TokenType;
 import com.alibou.security.repositories.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

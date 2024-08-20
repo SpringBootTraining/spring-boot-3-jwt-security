@@ -1,4 +1,4 @@
-package com.alibou.security.dto;
+package com.alibou.security.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

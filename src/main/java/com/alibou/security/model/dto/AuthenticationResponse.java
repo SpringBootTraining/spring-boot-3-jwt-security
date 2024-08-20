@@ -1,4 +1,4 @@
-package com.alibou.security.dto;
+package com.alibou.security.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

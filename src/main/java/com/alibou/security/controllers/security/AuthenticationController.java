@@ -1,8 +1,8 @@
 package com.alibou.security.controllers.security;
 
-import com.alibou.security.dto.AuthenticationRequest;
-import com.alibou.security.dto.AuthenticationResponse;
-import com.alibou.security.dto.RegisterRequest;
+import com.alibou.security.model.dto.AuthenticationRequest;
+import com.alibou.security.model.dto.AuthenticationResponse;
+import com.alibou.security.model.dto.RegisterRequest;
 import com.alibou.security.services.security.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,24 +20,22 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-  private final AuthenticationService service;
+  private final AuthenticationService authenticationService;
 
   @PostMapping("/register")
-  public ResponseEntity<AuthenticationResponse> register(
-      @RequestBody RegisterRequest request
-  ) {
-    return ResponseEntity.ok(service.register(request));
+  public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+    return ResponseEntity.ok(authenticationService.register(request));
   }
+
+
   @PostMapping("/authenticate")
-  public ResponseEntity<AuthenticationResponse> authenticate(
-      @RequestBody AuthenticationRequest request
-  ) {
-    return ResponseEntity.ok(service.authenticate(request));
+  public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+    return ResponseEntity.ok(authenticationService.authenticate(request));
   }
 
   @PostMapping("/refresh-token")
   public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    service.refreshToken(request, response);
+    authenticationService.refreshToken(request, response);
   }
 
 

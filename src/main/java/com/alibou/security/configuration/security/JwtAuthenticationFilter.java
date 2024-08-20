@@ -28,8 +28,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final CustomUserDetailsServiceImpl userDetailsService;
     private final TokenRepository tokenRepository;
 
+    /**
+     * This method is called by the container each time a request/response pair is passed through the chain due to a client request for a resource at the end of the chain.
+     *
+     * @param request     the {@link HttpServletRequest} object that contains the client's request
+     * @param response    the {@link HttpServletResponse} object that contains the filter's response
+     * @param filterChain the {@link FilterChain} for invoking the next filter or the resource itself
+     * @throws ServletException if an error occurs during the filter process
+     * @throws IOException      if an I/O related error occurs during the filter process
+     */
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+
         if (request.getServletPath().contains("/api/v1/auth")) {
             filterChain.doFilter(request, response);
             return;
@@ -51,12 +61,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // After extracting the Username or Email from the bearer token claims, we'll check if it's not null and the SecurityContextHolder doesn't have an authenticated user.
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            // After extracting the user form the bearer token we'll retrieve the user from the DB if it's exist.
+            // After extracting the username/email form the bearer token we'll retrieve the user from the DB if it's exist.
             UserDetails loadedUser = userDetailsService.loadUserByUsername(userEmail);
 
             // This is to get only the valid token from the DB.
             // We'll use this to ensure that the user has only one valid token which will be the same token that passed with the request.
-            var isTokenValid = tokenRepository.findByToken(jwt)
+            boolean isTokenValid = tokenRepository.findByToken(jwt)
                     .map(t -> !t.isExpired() && !t.isRevoked())
                     .orElse(false);
 

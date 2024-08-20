@@ -1,6 +1,6 @@
-package com.alibou.security.entities;
+package com.alibou.security.model.entities;
 
-import com.alibou.security.entities.enums.Role;
+import com.alibou.security.model.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,7 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @Entity
 @Table(name = "_user")
-public class User implements UserDetails {
+public class User extends Token implements UserDetails {
 
   @Id
   @GeneratedValue
@@ -33,7 +33,7 @@ public class User implements UserDetails {
   private String email;
   private String password;
 
-  @Enumerated(EnumType.STRING)
+  @Enumerated(EnumType.STRING) // This is to tell Spring that this is an Enum, the default EnumType is ORDINAL; here we want to use String type
   private Role role;
 
   @OneToMany(mappedBy = "user")

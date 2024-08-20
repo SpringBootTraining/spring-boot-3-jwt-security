@@ -1,14 +1,7 @@
 package com.alibou.security;
 
-import com.alibou.security.dto.RegisterRequest;
-import com.alibou.security.services.security.AuthenticationService;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import static com.alibou.security.entities.enums.Role.ADMIN;
-import static com.alibou.security.entities.enums.Role.MANAGER;
 
 @SpringBootApplication
 public class SecurityApplication {
@@ -17,7 +10,7 @@ public class SecurityApplication {
 		SpringApplication.run(SecurityApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner commandLineRunner(AuthenticationService service) {
 		return args -> {
 			var admin = RegisterRequest.builder()
@@ -39,5 +32,5 @@ public class SecurityApplication {
 			System.out.println("Manager token: " + service.register(manager).getAccessToken());
 
 		};
-	}
+	}*/
 }

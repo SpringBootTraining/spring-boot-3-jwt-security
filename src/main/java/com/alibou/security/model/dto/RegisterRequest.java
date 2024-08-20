@@ -1,6 +1,6 @@
-package com.alibou.security.dto;
+package com.alibou.security.model.dto;
 
-import com.alibou.security.entities.enums.Role;
+import com.alibou.security.model.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

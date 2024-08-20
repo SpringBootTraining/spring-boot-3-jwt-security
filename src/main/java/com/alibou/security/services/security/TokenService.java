@@ -1,6 +1,6 @@
 package com.alibou.security.services.security;
 
-import com.alibou.security.entities.User;
+import com.alibou.security.model.entities.User;
 import org.springframework.stereotype.Service;
 
 @Service

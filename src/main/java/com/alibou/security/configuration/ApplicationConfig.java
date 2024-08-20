@@ -17,9 +17,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
 
 
+    /**
+     * The AuthenticationProvider is the DAO which is responsible to fetch user details and encoding password.
+     * @param userDetailsService the user defined service that will laod the user info from the DB.
+     * @return a bean of the Authentication Provider.
+     */
     @Bean
     public AuthenticationProvider authenticationProvider(@Qualifier("customUserDetailsServiceImpl") CustomUserDetailsService userDetailsService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(); // username & password AuthenticationProvider
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;

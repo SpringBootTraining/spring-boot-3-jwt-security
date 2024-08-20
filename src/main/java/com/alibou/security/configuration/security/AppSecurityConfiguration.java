@@ -14,8 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static com.alibou.security.entities.enums.Permission.*;
-import static com.alibou.security.entities.enums.Role.*;
+import static com.alibou.security.model.enums.Permission.*;
+import static com.alibou.security.model.enums.Role.*;
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration
@@ -30,7 +30,6 @@ public class AppSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http.authorizeHttpRequests(configurer -> {
                     configurer
                             // Whitelist some endpoints
@@ -49,7 +48,6 @@ public class AppSecurityConfiguration {
                             )
                             .permitAll()
 
-
                             // Secure some endpoints for specific users and roles
                             .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
                             .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
@@ -64,6 +62,10 @@ public class AppSecurityConfiguration {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider)
+
+                // The main authentication is to authenticate users via username & password.
+                // In this line we are using a user defined filter [jwtAuthFilter] to authenticate the users using "JWT token" to access the application secured endpoints.
+                // If the user try to login, then the "UsernamePasswordAuthenticationFilter" will be executed to authenticate the user via username & password
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
                 .logoutUrl("/api/v1/auth/logout") // This doesn't need a RequestMapping method in a controller
